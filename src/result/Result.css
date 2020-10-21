@@ -1,0 +1,7 @@
+.results {
+    font-size: large;
+    width: 400px;
+    height: 100px;
+    border: black solid 1px;
+    margin: auto;
+}

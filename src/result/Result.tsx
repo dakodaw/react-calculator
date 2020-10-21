@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import '../App.css';
+import './Result.css';
 
 export class ResultComponent extends Component<{result: number}, {}> {
 
-    constructor(props: any) {
-        super(props);
-        console.log(this.props);
-    }
     render() {
-        let result = this.props;
-        console.log(result);
         return (
-            <div>
-                {this.props.result}
+            <div className="results">
+                <p>
+                    {this.props.result}
+                </p>
             </div>
         );
     }

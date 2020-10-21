@@ -1,0 +1,17 @@
+.keypad {
+    width: 400px;
+    margin: auto;
+    grid-template-columns: repeat(4, auto);
+}
+.keypad > * {
+    font-size: large;
+    width: 100px;
+    height: 100px;
+    background-color: rgb(201, 194, 194);
+    border: black solid 1px;
+}
+
+.zero, .zero button {
+    grid-column: 1 / 4;
+    width: 300px;
+}
