@@ -9,9 +9,8 @@ class App extends Component<{}, { result: number }> {
 
   private firstNumberString: string = "";
   private lastNumberString: string = "";
+  private equalsPressedLast: boolean = false;
 
-
-  // private operands: number[] = [];
 
   constructor(props: any) {
     super(props);
@@ -19,8 +18,6 @@ class App extends Component<{}, { result: number }> {
       result: 0
     };
   }
-
-  //After clicking equals, then clicking another operator, it should not perform the previous action again like it would with the equals sign
 
   public onClick = (input: any) => {
     if(input === "=")  {
@@ -30,28 +27,28 @@ class App extends Component<{}, { result: number }> {
     } else if(isNaN(input)) {
       this.operandAction(input)
     } else {
-      console.log("saving number")
       this.saveNumberInput(input);
     }
-    console.log("first number: ", this.firstNumberString, "last number", this.lastNumberString, "operator", this.lastUsedOperator)
   };
 
   private equalAction() {
     this.firstNumberString = this.onlyCalculateResults(+this.firstNumberString, +this.lastNumberString, this.lastUsedOperator).toString();
     this.updateResults(+this.firstNumberString);
+    this.equalsPressedLast = true;
   }
 
   private operandAction(operator: string) {
-    console.log("operand Action", operator, this.firstNumberString, this.lastNumberString);
-    this.firstNumberString = this.onlyCalculateResults(+this.firstNumberString, +this.lastNumberString, this.lastUsedOperator).toString();
-    this.updateResults(+this.firstNumberString);
+    if(!this.equalsPressedLast) {
+      this.firstNumberString = this.onlyCalculateResults(+this.firstNumberString, +this.lastNumberString, this.lastUsedOperator).toString();
+      this.updateResults(+this.firstNumberString);
+    }
     this.lastNumberString = "";
     this.lastUsedOperator = operator;
+    this.equalsPressedLast = false;
   }
 
   private onlyCalculateResults(operand1: number, operand2: number, operator: string): number {
     if(operator === "+") {
-      console.log("add "+ operand1 + " with " + operand2 + "=" + (operand1+operand2))
       return operand1 + operand2;
     } else if(operator === "-") {
       return operand1 - operand2;
@@ -73,14 +70,8 @@ class App extends Component<{}, { result: number }> {
     this.lastNumberString = "";
     this.firstNumberString = "";
     this.lastUsedOperator = "";
-    // this.resetOperands(0);
     this.updateResults(0);
   }
-
-  // private resetOperands(newResult: number) {
-  //   this.operands = [];
-  //   this.operands.push(newResult);
-  // }
 
   private updateResults(input: number) {
     this.setState({result: input});
@@ -89,7 +80,7 @@ class App extends Component<{}, { result: number }> {
   render() {
     return (
       <div className="App">
-        <h1>My Calculator</h1>
+        <h1>Simple React Calculator</h1>
         <ResultComponent result={this.state.result} ></ResultComponent>
         <KeysComponent onClick={this.onClick}></KeysComponent>
       </div>
